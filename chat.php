@@ -1,13 +1,13 @@
-<?php
-$pageTitle = "Search MISA ";
-require_once "config/database.php";
-include "includes/header.php";
-?>
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BG Mesob</title>
 
 <style>
-
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -15,1162 +15,961 @@ include "includes/header.php";
     box-sizing: border-box;
 }
 
+html,
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #0c0d12;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    color: #eef2ff;
+    background:
+        radial-gradient(circle at 15% 35%, rgba(46, 99, 210, 0.35), transparent 38%),
+        radial-gradient(circle at 85% 65%, rgba(117, 68, 230, 0.30), transparent 40%),
+        linear-gradient(135deg, #071525 0%, #0b1a31 45%, #10152b 100%);
     min-height: 100vh;
-    color: #f0f2f8;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
-
-
-::-webkit-scrollbar {
-    width: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.02);
-    border-radius: 12px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.15);
-    border-radius: 12px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.25);
-}
-
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
-
-.bg-mesh {
+body::before {
+    content: "";
     position: fixed;
     inset: 0;
-    z-index: 0;
-
-    background:
-        radial-gradient(
-            circle at 20% 30%,
-            rgba(66,133,244,0.25) 0%,
-            transparent 45%
-        ),
-        radial-gradient(
-            circle at 80% 70%,
-            rgba(123,97,255,0.2) 0%,
-            transparent 50%
-        ),
-        radial-gradient(
-            circle at 40% 80%,
-            rgba(0,212,255,0.15) 0%,
-            transparent 40%
-        ),
-        radial-gradient(
-            circle at 70% 20%,
-            rgba(52,168,83,0.08) 0%,
-            transparent 35%
-        );
-
-    background-color: #0b0d14;
-
-    animation: meshFloat 22s ease-in-out infinite alternate;
-
-    will-change: transform, opacity;
-}
-
-.bg-blur-glow {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
     pointer-events: none;
-
-    filter: blur(100px);
-    opacity: 0.3;
-
     background:
-        radial-gradient(
-            circle at 15% 25%,
-            #4285F4 0%,
-            transparent 50%
-        ),
-        radial-gradient(
-            circle at 85% 60%,
-            #7B61FF 0%,
-            transparent 60%
-        ),
-        radial-gradient(
-            circle at 50% 90%,
-            #00D4FF 0%,
-            transparent 40%
-        );
-
-    animation: glowDrift 30s ease-in-out infinite alternate;
+        radial-gradient(circle at 25% 70%, rgba(0, 180, 255, 0.08), transparent 35%),
+        radial-gradient(circle at 75% 25%, rgba(80, 120, 255, 0.08), transparent 35%);
+    z-index: 0;
 }
 
-@keyframes meshFloat {
-    0% {
-        transform: scale(1) rotate(0deg);
-    }
-
-    100% {
-        transform: scale(1.08) rotate(1.5deg);
-    }
-}
-
-@keyframes glowDrift {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.2;
-    }
-
-    100% {
-        transform: translate(4%, -3%) scale(1.2);
-        opacity: 0.4;
-    }
-}
-
-
-
-.app-container {
+.app {
     position: relative;
-    z-index: 2;
-
+    z-index: 1;
+    width: 100%;
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
-
-    backdrop-filter: blur(2px);
 }
 
+/* HEADER */
 
-
-.glass-nav {
-    padding: 1.2rem 2.5rem;
-
-    background: rgba(255,255,255,0.03);
-
-    backdrop-filter: blur(18px) saturate(180%);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
-
+.header {
+    width: 100%;
+    padding: 18px 7%;
+    background: rgba(7, 15, 29, 0.55);
     border-bottom: 1px solid rgba(255,255,255,0.04);
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    flex-wrap: wrap;
-    gap: 0.8rem;
-
-    transition: all 0.3s ease;
+    backdrop-filter: blur(16px);
 }
 
 .brand {
+    font-size: 25px;
     font-weight: 600;
-    font-size: 1.3rem;
-    letter-spacing: -0.02em;
-
-    background: linear-gradient(
-        135deg,
-        #f0f2f8 0%,
-        #b0b8d0 100%
-    );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    color: #e9efff;
 }
 
-.brand-mark {
-    width: 30px;
-    height: 30px;
+/* MAIN */
 
-    border-radius: 9px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(
-        135deg,
-        #4285F4,
-        #7B61FF
-    );
-
-    color: #fff;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    -webkit-text-fill-color: #fff;
-
-    box-shadow:
-        0 6px 18px rgba(66,133,244,0.2);
-}
-
-.nav-actions {
-    display: flex;
-    gap: 1.2rem;
-    align-items: center;
-}
-
-.nav-actions span {
-    font-size: 1.3rem;
-    color: rgba(255,255,255,0.5);
-
-    transition: all 0.25s ease;
-
-    cursor: default;
-}
-
-.nav-actions span:hover {
-    color: #fff;
-    transform: translateY(-1px) scale(1.05);
-}
-
-
-.hero {
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 2rem 1.5rem 4rem;
-
+.main {
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
+    padding: 15px 20px 35px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    width: 100%;
+/* TITLE */
 
+.title {
+    font-size: clamp(30px, 7vw, 43px);
+    font-weight: 650;
+    letter-spacing: -1.5px;
     text-align: center;
+    margin-top: 0;
+    color: #eef2ff;
 }
 
-/* =========================================================
-   GREETING
-   ========================================================= */
-
-.greeting-wrap {
-    margin-bottom: 0.3rem;
-    overflow: hidden;
-}
-
-.greeting {
-    font-size: clamp(3.8rem, 14vw, 6.8rem);
-
-    font-weight: 600;
-
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-
-    background: linear-gradient(
-        135deg,
-        #f0f2f8 0%,
-        #b0b8d0 40%,
-        #7B61FF 70%,
-        #4285F4 100%
-    );
-
-    background-size: 300% 300%;
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-
-    animation:
-        floatUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-        gradShift 10s ease-in-out infinite alternate;
-
-    animation-delay: 0.1s, 0.1s;
-
-    transform: translateY(40px);
-    opacity: 0;
-}
-
-@keyframes floatUp {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes gradShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    100% {
-        background-position: 100% 50%;
-    }
-}
-
-
-
-.sub-greeting {
-    font-size: clamp(1.2rem, 4vw, 2.2rem);
-
+.subtitle {
+    margin-top: 26px;
+    color: rgba(235,240,255,0.52);
+    font-size: 17px;
     font-weight: 400;
-
-    letter-spacing: -0.01em;
-
-    color: rgba(255,255,255,0.6);
-
-    margin-top: -0.2rem;
-    margin-bottom: 1.8rem;
-
-    opacity: 0;
-
-    animation:
-        fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1)
-        forwards;
-
-    animation-delay: 0.6s;
+    display: flex;
+    align-items: center;
+    gap: 9px;
 }
 
-@keyframes fadeUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+/* LOGO / COMPANION */
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.companion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
 }
 
+.companion img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
 
+.companion span {
+    font-size: 18px;
+}
 
-.suggest-grid {
+/* MODE SWITCH */
+
+.mode-switch {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.07);
+}
+
+.mode {
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.38);
+    padding: 9px 20px;
+    border-radius: 24px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.mode.active {
+    background: rgba(255,255,255,0.13);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+/* SUGGESTIONS */
+
+.suggestions {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-
     justify-content: center;
-
-    gap: 1rem;
-
-    margin-top: 2.2rem;
-
-    width: 100%;
+    gap: 10px;
+    margin-top: 60px;
 }
 
-.suggest-card {
-    flex: 0 1 auto;
-
-    min-width: 150px;
-
-    padding: 0.9rem 1.6rem;
-
-    background: rgba(255,255,255,0.04);
-
+.suggestion {
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.045);
+    color: rgba(245,247,255,0.78);
+    border-radius: 30px;
+    padding: 11px 22px;
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.25s ease;
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    border: 1px solid rgba(255,255,255,0.06);
-
-    border-radius: 40px;
-
-    box-shadow:
-        0 12px 30px -12px rgba(0,0,0,0.4);
-
-    color: rgba(255,255,255,0.75);
-
-    font-weight: 450;
-
-    letter-spacing: -0.01em;
-
-    transition:
-        all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-
-    cursor: pointer;
-
-    backdrop-filter: blur(12px);
-
-    transform: translateY(20px);
-    opacity: 0;
-
-    animation:
-        cardRise
-        0.7s
-        cubic-bezier(0.16, 1, 0.3, 1)
-        forwards;
 }
 
-.suggest-card:nth-child(1) {
-    animation-delay: 0.9s;
+.suggestion:hover {
+    background: rgba(255,255,255,0.09);
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.14);
 }
 
-.suggest-card:nth-child(2) {
-    animation-delay: 1.05s;
-}
+/* CHAT */
 
-.suggest-card:nth-child(3) {
-    animation-delay: 1.2s;
-}
-
-@keyframes cardRise {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.96);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.suggest-card:hover {
-    transform:
-        translateY(-6px)
-        scale(1.02)
-        rotate(0.5deg);
-
-    background: rgba(255,255,255,0.08);
-
-    border-color: rgba(255,255,255,0.15);
-
-    box-shadow:
-        0 20px 40px -12px rgba(66,133,244,0.2),
-        0 0 0 1px rgba(255,255,255,0.02);
-}
-
-.suggest-card .icon {
-    margin-right: 0.6rem;
-
-    color: #7B61FF;
-
-    font-size: 1.1rem;
-
-    transition: transform 0.25s ease;
-}
-
-.suggest-card:hover .icon {
-    transform: rotate(6deg) scale(1.1);
-}
-
-
-
-.chat-input-wrap {
+.chat {
     width: 100%;
-
-    max-width: 720px;
-
-    margin: 2.2rem auto 0;
-
-    padding: 0 0.5rem;
-}
-
-.input-glass {
+    max-width: 760px;
+    margin-top: 35px;
     display: flex;
-    align-items: center;
-
-    background: rgba(255,255,255,0.04);
-
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
-    border: 1px solid rgba(255,255,255,0.06);
-
-    border-radius: 60px;
-
-    padding:
-        0.3rem
-        0.3rem
-        0.3rem
-        1.8rem;
-
-    box-shadow:
-        0 16px 40px -16px rgba(0,0,0,0.5);
-
-    transition:
-        all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.input-glass:focus-within {
-    box-shadow:
-        0 20px 50px -16px rgba(66,133,244,0.2),
-        0 0 0 2px rgba(66,133,244,0.08);
-
-    transform: scale(1.01);
-
-    background: rgba(255,255,255,0.06);
-
-    border-color: rgba(255,255,255,0.1);
-}
-
-.input-glass input {
-    flex: 1;
-
-    min-width: 0;
-
-    background: transparent;
-
-    border: none;
-    outline: none;
-
-    color: #f0f2f8;
-
-    font-size: 1rem;
-
-    padding: 0.9rem 0;
-
-    font-weight: 400;
-
-    letter-spacing: -0.01em;
-
-    font-family: inherit;
-}
-
-.input-glass input::placeholder {
-    color: rgba(255,255,255,0.25);
-
-    font-weight: 350;
-
-    transition: opacity 0.3s ease;
-}
-
-.input-glass input:focus::placeholder {
-    opacity: 0.2;
-}
-
-.input-glass button {
-    background: linear-gradient(
-        135deg,
-        #4285F4,
-        #7B61FF
-    );
-
-    border: none;
-
-    border-radius: 40px;
-
-    padding: 0.6rem 1.3rem;
-
-    color: #fff;
-
-    font-weight: 500;
-
-    font-size: 0.95rem;
-
-    display: flex;
-    align-items: center;
-
-    gap: 0.5rem;
-
-    transition:
-        all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-    box-shadow:
-        0 4px 12px rgba(66,133,244,0.2);
-
-    cursor: pointer;
-
-    font-family: inherit;
-}
-
-.input-glass button:hover {
-    transform:
-        translateY(-2px)
-        scale(1.02);
-
-    box-shadow:
-        0 12px 24px -8px rgba(66,133,244,0.4);
-}
-
-.input-glass button:active {
-    transform: scale(0.94);
-}
-
-.input-glass button .arrow {
-    font-size: 1.1rem;
-}
-
-
-.chat-preview {
-    width: 100%;
-
-    max-width: 720px;
-
-    margin: 1.5rem auto 0;
-
-    padding: 0 0.5rem;
-
-    display: flex;
-
     flex-direction: column;
-
-    gap: 0.8rem;
-
-    max-height: 300px;
-
+    gap: 13px;
+    max-height: 280px;
     overflow-y: auto;
-
+    padding: 4px 5px;
     scrollbar-width: thin;
 }
 
-.msg {
-    padding: 0.9rem 1.4rem;
-
+.message {
+    max-width: 78%;
+    padding: 13px 22px;
     border-radius: 28px;
-
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-
-    background: rgba(255,255,255,0.03);
-
-    border: 1px solid rgba(255,255,255,0.04);
-
-    max-width: 80%;
-
-    animation:
-        msgSlide
-        0.5s
-        cubic-bezier(0.16, 1, 0.3, 1)
-        forwards;
-
-    opacity: 0;
-
-    transform: translateY(12px);
-
-    font-weight: 400;
-
-    line-height: 1.5;
-
-    box-shadow:
-        0 6px 18px -8px rgba(0,0,0,0.2);
-
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.86);
+    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.035);
+    backdrop-filter: blur(12px);
     text-align: left;
 }
 
-.msg.user {
+.message.user {
     align-self: flex-end;
-
-    background: rgba(66,133,244,0.12);
-
-    border-color: rgba(66,133,244,0.1);
-
-    transform: translateX(20px);
-
-    animation:
-        msgSlideRight
-        0.5s
-        cubic-bezier(0.16, 1, 0.3, 1)
-        forwards;
+    background: rgba(65,105,230,0.22);
+    border-color: rgba(85,120,255,0.12);
 }
 
-.msg.assistant {
+.message.assistant {
     align-self: flex-start;
-
-    background: rgba(255,255,255,0.02);
-
-    border-color: rgba(255,255,255,0.04);
 }
 
-@keyframes msgSlide {
-    0% {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.message a {
+    color: #9eb5ff;
+    text-decoration: none;
 }
 
-@keyframes msgSlideRight {
-    0% {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.message a:hover {
+    text-decoration: underline;
 }
 
-.msg:nth-child(1) {
-    animation-delay: 0.3s;
+/* INPUT */
+
+.input-area {
+    width: 100%;
+    max-width: 760px;
+    margin-top: 38px;
 }
 
-.msg:nth-child(2) {
-    animation-delay: 0.5s;
-}
-
-.msg:nth-child(3) {
-    animation-delay: 0.7s;
-}
-
-
-
-.typing-indicator {
+.input-box {
+    width: 100%;
     display: flex;
     align-items: center;
-
-    gap: 6px;
-
-    padding:
-        0.4rem
-        1rem;
-
-    background: rgba(255,255,255,0.02);
-
+    gap: 8px;
+    padding: 6px 7px 6px 20px;
     border-radius: 40px;
-
-    width: fit-content;
-
-    backdrop-filter: blur(4px);
-
-    border: 1px solid rgba(255,255,255,0.02);
-
-    margin-top: 0.2rem;
-
-    opacity: 0;
-
-    animation:
-        fadeUp
-        0.6s
-        ease
-        forwards;
-
-    animation-delay: 1s;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18);
 }
 
-.typing-indicator span {
-    width: 8px;
-    height: 8px;
-
-    background: rgba(255,255,255,0.2);
-
-    border-radius: 40px;
-
-    display: inline-block;
-
-    animation:
-        pulseDot
-        1.4s
-        ease-in-out
-        infinite;
+.input-box:focus-within {
+    border-color: rgba(100,130,255,0.30);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,0.20),
+        0 0 0 2px rgba(90,120,255,0.05);
 }
 
-.typing-indicator span:nth-child(2) {
-    animation-delay: 0.2s;
+#question {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 12px 0;
 }
 
-.typing-indicator span:nth-child(3) {
-    animation-delay: 0.4s;
+#question::placeholder {
+    color: rgba(255,255,255,0.25);
 }
 
-@keyframes pulseDot {
-    0%, 100% {
-        transform: scale(0.6);
-        opacity: 0.3;
-    }
+/* SEND */
 
-    50% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
+.send-btn {
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #5879ff, #7a58f3);
+    border-radius: 28px;
+    padding: 11px 25px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.25s ease;
 }
 
+.send-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(86,103,255,0.25);
+}
 
+/* MICROPHONE */
 
-.footer-meta {
-    margin-top: 2rem;
+.mic-btn {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: linear-gradient(135deg, #5275ff, #7855f5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    transition: 0.25s ease;
+}
 
+.mic-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 8px 22px rgba(90,100,255,0.3);
+}
+
+.mic-btn.listening {
+    box-shadow: 0 0 0 5px rgba(110,100,255,0.16);
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    padding: 5px 15px 20px;
     color: rgba(255,255,255,0.12);
-
-    font-size: 0.7rem;
-
-    letter-spacing: 0.02em;
-
+    font-size: 10px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-
-    font-weight: 400;
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+.footer div {
+    margin-top: 5px;
+}
 
-@media (max-width: 640px) {
+/* MOBILE */
 
-    .glass-nav {
-        padding: 0.8rem 1.2rem;
+@media (max-width: 600px) {
 
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 0.3rem;
+    .header {
+        padding: 17px 32px;
     }
 
-    .hero {
-        padding:
-            1.5rem
-            1rem;
+    .brand {
+        font-size: 23px;
     }
 
-    .suggest-card {
-        min-width: 120px;
-
-        padding:
-            0.6rem
-            1.2rem;
-
-        font-size: 0.9rem;
+    .main {
+        padding: 0 18px 20px;
     }
 
-    .input-glass {
-        border-radius: 40px;
-
-        padding:
-            0.2rem
-            0.2rem
-            0.2rem
-            1.2rem;
+    .title {
+        margin-top: 0;
+        font-size: 32px;
+        white-space: nowrap;
     }
 
-    .input-glass input {
-        font-size: 0.9rem;
-
-        padding: 0.6rem 0;
+    .subtitle {
+        margin-top: 25px;
+        font-size: 16px;
     }
 
-    .input-glass button {
-        padding:
-            0.4rem
-            1rem;
-
-        font-size: 0.8rem;
+    .mode-switch {
+        margin-top: 22px;
     }
 
-    .msg {
-        max-width: 90%;
+    .mode {
+        padding: 9px 18px;
+    }
+
+    .suggestions {
+        margin-top: 60px;
+        gap: 9px;
+    }
+
+    .suggestion {
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+
+    .chat {
+        margin-top: 32px;
+        max-height: 280px;
+    }
+
+    .message {
+        max-width: 86%;
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+
+    .input-area {
+        margin-top: 30px;
+    }
+
+    .input-box {
+        padding-left: 17px;
+    }
+
+    #question {
+        font-size: 14px;
+    }
+
+    .send-btn {
+        padding: 11px 20px;
+    }
+
+    .mic-btn {
+        width: 46px;
+        height: 46px;
+    }
+
+    .footer {
+        font-size: 9px;
+        padding-bottom: 18px;
     }
 }
 </style>
+</head>
 
+<body>
 
+<div class="app">
 
-<div class="bg-mesh"></div>
-<div class="bg-blur-glow"></div>
+    <header class="header">
+        <div class="brand">BG Mesob</div>
+    </header>
 
+    <main class="main">
 
+        <h1 class="title">Ask Me Any Question</h1>
 
-<div class="app-container">
-
-
-
-<nav class="glass-nav">
-
-    <div class="brand">
-
-        <div class="brand-mark">
-            M
+        <div class="companion">
+            <img src="assets/images/logo.png" alt="BG Mesob Logo">
+            <span>Your intelligent companion</span>
         </div>
 
-        Mesob
+        <div class="mode-switch">
 
-    </div>
-
-
-    <div class="nav-actions">
-
-        <span title="Theme">☾</span>
-        <span title="Settings">⚙</span>
-        <span title="Account">●</span>
-
-    </div>
-
-</nav>
-
-
-
-<main class="hero">
-
-
-    <!-- GREETING -->
-
-    <div class="greeting-wrap">
-
-        <div class="greeting">
-            Hello
-        </div>
-
-    </div>
-
-
-    <div class="sub-greeting">
-        Search Mesob 
-    </div>
-
-
-   
-
-    <div class="suggest-grid">
-
-        <button
-            type="button"
-            class="suggest-card"
-            data-q="passport renewal"
-        >
-            <span class="icon">✦</span>
-            Passport
-        </button>
-
-
-        <button
-            type="button"
-            class="suggest-card"
-            data-q="Tin number"
-        >
-            <span class="icon">⚡</span>
-            Tin number
-        </button>
-
-
-        <button
-            type="button"
-            class="suggest-card"
-            data-q="business registration"
-        >
-            <span class="icon">▤</span>
-            Business registration
-        </button>
-
-    </div>
-
-
-
-
-    <div
-        id="chatMessages"
-        class="chat-preview"
-    >
-
-        <div class="msg assistant">
-            How can I help you today?
-        </div>
-
-
-        <div class="msg user">
-             Mesob.
-        </div>
-
-
-        <div class="msg assistant">
-            Mesob is an Ethiopian service assistant.
-        </div>
-
-
-        <div
-            id="typingIndicator"
-            class="typing-indicator"
-        >
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-    </div>
-
-
-
-    <div class="chat-input-wrap">
-
-        <form
-            id="chatForm"
-            class="input-glass"
-        >
-
-            <input
-                id="question"
-                type="text"
-                autocomplete="off"
-                placeholder="Searck Mesob ..."
-                aria-label="chat input"
-                required
-            >
-
-
-            <button
-                type="submit"
-            >
-                <span class="arrow">↑</span>
-                Send
+            <button type="button" class="mode" id="fastMode">
+                Mesob Fast
             </button>
 
-        </form>
+            <button type="button" class="mode active" id="proMode">
+                Mesob Pro
+            </button>
 
-    </div>
+        </div>
 
+        <div class="suggestions">
 
-    <div class="footer-meta">
-        MISA
-    </div>
+            <button
+                type="button"
+                class="suggestion"
+                data-question="How do I get my fyda">
+                How do I get my fyda
+            </button>
 
-</main>
+            <button
+                type="button"
+                class="suggestion"
+                data-question="How do I get TIN number">
+                How do I get TIN number
+            </button>
 
+            <button
+                type="button"
+                class="suggestion"
+                data-question="ፋይዳ ለማውታት">
+                ፋይዳ ለማውታት
+            </button>
+
+            <button
+                type="button"
+                class="suggestion"
+                data-question="i lost my passport">
+                i lost my passport
+            </button>
+
+        </div>
+
+        <div class="chat" id="chatMessages">
+
+            <div class="message assistant">
+                Goodbye! Have a great day.
+            </div>
+
+            <div class="message user">
+                Bye
+            </div>
+
+            <div class="message assistant">
+                Goodbye! Have a great day.
+            </div>
+
+        </div>
+
+        <div class="input-area">
+
+            <form class="input-box" id="chatForm">
+
+                <input
+                    type="text"
+                    id="question"
+                    autocomplete="off"
+                    placeholder="Ask Mesob anything..."
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="send-btn">
+                    Send
+                </button>
+
+                <button
+                    type="button"
+                    class="mic-btn"
+                    id="micButton"
+                    title="Voice input">
+                    🎙
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div>CRAFTED WITH INTENTION BY NATNEAL AMSALU</div>
+        <div>NATNEALNAT@GMAIL.COM</div>
+    </footer>
 
 </div>
 
 <script>
+
 (function () {
 
     const form = document.getElementById('chatForm');
     const input = document.getElementById('question');
     const messages = document.getElementById('chatMessages');
-    const typing = document.getElementById('typingIndicator');
+    const micButton = document.getElementById('micButton');
+    const fastMode = document.getElementById('fastMode');
+    const proMode = document.getElementById('proMode');
 
+    /*
+     * Add message to chat
+     */
 
-
-    function addMessage(text, type) {
+    function addMessage(text, type, allowHtml = false) {
 
         const message = document.createElement('div');
 
-        message.className = 'msg ' + type;
+        message.className = 'message ' + type;
 
-        message.textContent = text;
+        if (allowHtml) {
+            message.innerHTML = text;
+        } else {
+            message.textContent = text;
+        }
 
-        messages.insertBefore(
-            message,
-            typing
-        );
+        messages.appendChild(message);
 
-        messages.scrollTop =
-            messages.scrollHeight;
+        messages.scrollTop = messages.scrollHeight;
 
         return message;
     }
 
+    /*
+     * Typing indicator
+     */
+
+    function addTyping() {
+
+        removeTyping();
+
+        const typing = document.createElement('div');
+
+        typing.className = 'message assistant';
+        typing.id = 'typingMessage';
+
+        typing.innerHTML = '...';
+
+        messages.appendChild(typing);
+
+        messages.scrollTop = messages.scrollHeight;
+
+        return typing;
+    }
+
+    function removeTyping() {
+
+        const typing = document.getElementById('typingMessage');
+
+        if (typing) {
+            typing.remove();
+        }
+
+    }
+
+    /*
+     * Suggestion buttons
+     */
 
     document
-        .querySelectorAll('.suggest-card')
+        .querySelectorAll('.suggestion')
         .forEach(function (button) {
 
-            button.addEventListener(
-                'click',
-                function () {
-
-                    const question =
-                        this.getAttribute('data-q');
-
-                    if (!question) {
-                        return;
-                    }
-
-                    input.value = question;
-
-                    input.focus();
-
-                }
-            );
-
-        });
-
-
-    
-
-    if (form) {
-
-        form.addEventListener(
-            'submit',
-            function (e) {
-
-                e.preventDefault();
+            button.addEventListener('click', function () {
 
                 const question =
-                    input.value.trim();
+                    this.getAttribute('data-question');
 
                 if (!question) {
                     return;
                 }
 
+                input.value = question;
+                input.focus();
 
-                /* Add user's message */
+            });
 
-                addMessage(
-                    question,
-                    'user'
+        });
+
+    /*
+     * Chat submission
+     */
+
+    form.addEventListener('submit', async function (e) {
+
+        e.preventDefault();
+
+        const question = input.value.trim();
+
+        if (!question) {
+            return;
+        }
+
+        /*
+         * Show user's question
+         */
+
+        addMessage(question, 'user');
+
+        input.value = '';
+
+        /*
+         * Show typing indicator
+         */
+
+        addTyping();
+
+        try {
+
+            /*
+             * Send question to PHP API
+             */
+
+            const formData = new FormData();
+
+            formData.append('question', question);
+
+            const response = await fetch(
+                'api_chat.php',
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            );
+
+            /*
+             * Check HTTP response
+             */
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'HTTP error: ' + response.status
                 );
 
+            }
 
-                input.value = '';
+            /*
+             * Convert response to JSON
+             */
 
+            const data = await response.json();
 
-         
+            console.log('Mesob API response:', data);
 
-                if (typing) {
-                    typing.style.opacity = '1';
-                }
+            removeTyping();
 
+            /*
+             * API returned success
+             */
+
+            if (data.ok) {
 
                 /*
-                 *  Query from db  
-                 * 
-                 *
-               
+                 * Matching service found
                  */
 
+                if (data.found && data.service) {
 
-                messages.scrollTop =
-                    messages.scrollHeight;
+                    const service = data.service;
 
-            }
-        );
+                    const answer = `
+                        <strong>${escapeHtml(service.service_name || 'Service')}</strong><br><br>
 
-    }
+                        <strong>Organization:</strong><br>
+                        ${escapeHtml(service.organization || 'Not specified')}<br><br>
 
+                        <strong>Requirements:</strong><br>
+                        ${formatText(service.requirements || 'Not specified')}<br><br>
 
+                        <strong>Processing Time:</strong><br>
+                        ${escapeHtml(service.processing_time || 'Not specified')}<br><br>
 
+                        <strong>Government Fee:</strong><br>
+                        ${escapeHtml(service.government_fee || 'Not specified')}<br><br>
 
-    if (input) {
+                        <strong>Mesob Service Fee:</strong><br>
+                        ${escapeHtml(service.mesob_fee || 'Not specified')}<br><br>
 
-        input.addEventListener(
-            'keydown',
-            function (e) {
+                        ${
+                            service.link
+                                ? `<a href="${escapeAttribute(service.link)}">View Service Details</a>`
+                                : ''
+                        }
+                    `;
 
-                if (
-                    e.key === 'Enter' &&
-                    !e.shiftKey
-                ) {
+                    addMessage(
+                        answer,
+                        'assistant',
+                        true
+                    );
 
-                    e.preventDefault();
+                }
 
-                    form.dispatchEvent(
-                        new Event('submit')
+                /*
+                 * No matching service
+                 */
+
+                else {
+
+                    addMessage(
+                        data.message ||
+                        'I could not find a matching service in the BG Mesob service catalogue.',
+                        'assistant'
                     );
 
                 }
 
             }
+
+            /*
+             * API returned an error
+             */
+
+            else {
+
+                addMessage(
+                    data.message ||
+                    'Sorry, something went wrong.',
+                    'assistant'
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                'Mesob API error:',
+                error
+            );
+
+            removeTyping();
+
+            addMessage(
+                'Sorry, I could not connect to Mesob. Please try again.',
+                'assistant'
+            );
+
+        }
+
+    });
+
+    /*
+     * Enter key
+     */
+
+    input.addEventListener('keydown', function (e) {
+
+        if (
+            e.key === 'Enter' &&
+            !e.shiftKey
+        ) {
+
+            e.preventDefault();
+
+            form.requestSubmit();
+
+        }
+
+    });
+
+    /*
+     * Mesob Fast / Mesob Pro buttons
+     */
+
+    fastMode.addEventListener('click', function () {
+
+        fastMode.classList.add('active');
+        proMode.classList.remove('active');
+
+    });
+
+    proMode.addEventListener('click', function () {
+
+        proMode.classList.add('active');
+        fastMode.classList.remove('active');
+
+    });
+
+    /*
+     * Escape HTML
+     *
+     * This prevents service data from breaking
+     * the chat interface.
+     */
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+    }
+
+    /*
+     * Escape URL attribute
+     */
+
+    function escapeAttribute(value) {
+
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+    }
+
+    /*
+     * Format requirement text
+     *
+     * Converts line breaks into HTML line breaks.
+     */
+
+    function formatText(value) {
+
+        return escapeHtml(value)
+            .replace(/\r\n/g, '<br>')
+            .replace(/\n/g, '<br>')
+            .replace(/\r/g, '<br>');
+
+    }
+
+    /*
+     * Microphone / speech recognition
+     */
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+
+        const recognition =
+            new SpeechRecognition();
+
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.continuous = false;
+
+        micButton.addEventListener(
+            'click',
+            function () {
+
+                try {
+
+                    recognition.start();
+
+                    micButton.classList.add(
+                        'listening'
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.log(error);
+
+                }
+
+            }
+        );
+
+        recognition.addEventListener(
+            'result',
+            function (event) {
+
+                const transcript =
+                    event.results[0][0].transcript;
+
+                input.value = transcript;
+
+                input.focus();
+
+            }
+        );
+
+        recognition.addEventListener(
+            'end',
+            function () {
+
+                micButton.classList.remove(
+                    'listening'
+                );
+
+            }
+        );
+
+        recognition.addEventListener(
+            'error',
+            function () {
+
+                micButton.classList.remove(
+                    'listening'
+                );
+
+            }
         );
 
     }
 
+    else {
+
+        micButton.addEventListener(
+            'click',
+            function () {
+
+                alert(
+                    'Voice input is not supported by this browser.'
+                );
+
+            }
+        );
+
+    }
 
 })();
+
 </script>
 
-<?php
-include "includes/footer.php";
-?>
+</body>
+</html>
+```
